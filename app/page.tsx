@@ -76,7 +76,7 @@ function FloatingTech() {
   )
 }
 
-// Profile Picture Upload Component
+// Profile Picture Upload 
 function ProfilePictureUpload() {
   const [profileImage, setProfileImage] = useState<string | null>(null)
 
