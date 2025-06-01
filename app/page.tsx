@@ -1,7 +1,8 @@
 "use client"
 
 import type React from "react"
-
+import { useState } from "react";
+import { sendEmail } from "./actions/email";
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Canvas } from "@react-three/fiber"
@@ -248,6 +249,114 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
       </Card>
     </motion.div>
   )
+}
+
+// Contact Form Component
+function ContactForm() {
+  const [formStatus, setFormStatus] = useState<{
+    message: string;
+    type: 'success' | 'error' | null;
+  }>({
+    message: '',
+    type: null,
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData(event.currentTarget);
+    const result = await sendEmail(formData);
+    
+    setIsSubmitting(false);
+    
+    if (result.error) {
+      setFormStatus({
+        message: result.error,
+        type: 'error',
+      });
+    } else {
+      setFormStatus({
+        message: 'Message sent successfully!',
+        type: 'success',
+      });
+      // Reset form
+      (event.target as HTMLFormElement).reset();
+    }
+  }
+
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit}>
+      <div className="grid md:grid-cols-2 gap-4">
+        <motion.div whileHover={{ scale: 1.02 }}>
+          <Input
+            name="name"
+            placeholder="Your Name"
+            className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
+            required
+          />
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.02 }}>
+          <Input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
+            required
+          />
+        </motion.div>
+      </div>
+
+      <motion.div whileHover={{ scale: 1.02 }}>
+        <Input
+          name="subject"
+          placeholder="Subject"
+          className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
+          required
+        />
+      </motion.div>
+
+      <motion.div whileHover={{ scale: 1.02 }}>
+        <Textarea
+          name="message"
+          placeholder="Your Message"
+          rows={5}
+          className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
+          required
+        />
+      </motion.div>
+
+      {formStatus.message && (
+        <div className={`p-3 rounded-md ${
+          formStatus.type === 'success' ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
+        }`}>
+          {formStatus.message}
+        </div>
+      )}
+
+      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white py-3 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300 disabled:opacity-50"
+        >
+          {isSubmitting ? (
+            <div className="flex items-center justify-center">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              Sending...
+            </div>
+          ) : (
+            <>
+              <Send className="w-5 h-5 mr-2" />
+              Send Message
+            </>
+          )}
+        </Button>
+      </motion.div>
+    </form>
+  );
 }
 
 export default function Portfolio() {
@@ -832,62 +941,17 @@ export default function Portfolio() {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-              >
+              initial={{ opacity: 0, x: 50 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               transition={{ duration: 0.8 }}
+               >
                 <Card className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-cyan-500/20 p-8 hover:border-cyan-400/50 transition-all duration-500">
-                  <CardContent className="p-0">
-                    <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-
-                    <form className="space-y-6">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <motion.div whileHover={{ scale: 1.02 }}>
-                          <Input
-                            placeholder="Your Name"
-                            className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
-                          />
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.02 }}>
-                          <Input
-                            type="email"
-                            placeholder="Your Email"
-                            className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
-                          />
-                        </motion.div>
-                      </div>
-
-                      <motion.div whileHover={{ scale: 1.02 }}>
-                        <Input
-                          placeholder="Subject"
-                          className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
-                        />
-                      </motion.div>
-
-                      <motion.div whileHover={{ scale: 1.02 }}>
-                        <Textarea
-                          placeholder="Your Message"
-                          rows={5}
-                          className="bg-slate-800/50 border-cyan-500/30 text-white placeholder:text-white/50 focus:border-cyan-400 transition-all duration-300"
-                        />
-                      </motion.div>
-
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          type="submit"
-                          className="w-full bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white py-3 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300"
-                        >
-                          <Send className="w-5 h-5 mr-2" />
-                          Send Message
-                        </Button>
-                      </motion.div>
-                    </form>
-                  </CardContent>
+                <CardContent className="p-0">
+                  <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
+                  <ContactForm />
+                </CardContent>
                 </Card>
               </motion.div>
-            </div>
-          </div>
-        </section>
 
         {/* Enhanced Footer */}
         <footer className="py-8 border-t border-cyan-500/20 bg-slate-900/50 backdrop-blur-xl">
