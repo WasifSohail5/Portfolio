@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react";
-import { sendEmail } from "./actions/email";
 import { useState, useEffect } from "react"
+import { sendEmail } from "./actions/email";
 import { motion } from "framer-motion"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Float, Environment } from "@react-three/drei"
@@ -12,7 +11,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ThemeProvider } from "next-themes";
 import { ThemeProvider } from "@/components/theme-provider"
 import {
   Moon,
@@ -35,7 +33,6 @@ import {
   BarChart3,
   Stethoscope,
   Calendar,
-  GraduationCapIcon,
   Calculator,
   Terminal,
   Mouse,
@@ -160,7 +157,7 @@ const projectIcons = {
   "Crime Prediction": BarChart3,
   MedNexusAI: Stethoscope,
   EventPlanner: Calendar,
-  "Virtual Tutor": GraduationCapIcon,
+  "Virtual Tutor": GraduationCap,
   "Smart Electricity Bill Calculator": Calculator,
   "Easy Terminal": Terminal,
   "Virtual Mouse": Mouse,
@@ -942,17 +939,20 @@ export default function Portfolio() {
               </motion.div>
 
               <motion.div
-              initial={{ opacity: 0, x: 50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               transition={{ duration: 0.8 }}
-               >
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
                 <Card className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-cyan-500/20 p-8 hover:border-cyan-400/50 transition-all duration-500">
-                <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-                  <ContactForm />
-                </CardContent>
+                  <CardContent className="p-0">
+                    <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
+                    <ContactForm />
+                  </CardContent>
                 </Card>
               </motion.div>
+            </div>
+          </div>
+        </section>
 
         {/* Enhanced Footer */}
         <footer className="py-8 border-t border-cyan-500/20 bg-slate-900/50 backdrop-blur-xl">
