@@ -77,8 +77,9 @@ function FloatingTech() {
 }
 
 // Profile Picture Upload 
+// Profile Picture Component with default image
 function ProfilePictureUpload() {
-  const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [profileImage, setProfileImage] = useState<string>("/images/Wasif.jpg"); // Your image path here
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -96,15 +97,11 @@ function ProfilePictureUpload() {
       <div className="w-32 h-32 mx-auto mb-6 relative">
         <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-400 to-teal-500 p-1">
           <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
-            {profileImage ? (
-              <img
-                src={profileImage || "/placeholder.svg"}
-                alt="Profile"
-                className="w-full h-full object-cover rounded-full"
-              />
-            ) : (
-              <div className="text-4xl text-cyan-400">WS</div>
-            )}
+            <img
+              src={profileImage || "/placeholder.svg"}
+              alt="Wasif Sohail"
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
         </div>
 
@@ -121,7 +118,7 @@ function ProfilePictureUpload() {
           />
           <div className="text-white text-sm text-center">
             <div className="text-lg mb-1">📷</div>
-            Upload Photo
+            Change Photo
           </div>
         </motion.div>
       </div>
@@ -301,7 +298,7 @@ export default function Portfolio() {
       tech: ["Python", "AI", "Education", "Natural Language Processing", "Machine Learning"],
       category: "Education Tech",
       starred: false,
-      githubUrl: "https://github.com/WasifSohail5/Virtual-Tutor",
+      githubUrl: "https://github.com/WasifSohail5/Virtual_Tutor",
     },
     {
       name: "Smart Electricity Bill Calculator",
@@ -337,7 +334,7 @@ export default function Portfolio() {
       tech: ["Python", "Collaborative Filtering", "Scikit-learn", "Pandas", "Music Analysis"],
       category: "Recommendation Systems",
       starred: true,
-      githubUrl: "https://github.com/WasifSohail5/AMUSIC-AI-Powered-MusicRecommendationSystem",
+      githubUrl: "https://github.com/WasifSohail5/AMUSIC-AI_Powered_MusicRecommendationSystem",
     },
     {
       name: "FitFusion",
