@@ -12,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { ThemeProvider } from "next-themes";
 import { ThemeProvider } from "@/components/theme-provider"
 import {
   Moon,
